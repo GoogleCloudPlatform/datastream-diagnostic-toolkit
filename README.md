@@ -1,7 +1,9 @@
-# Datastream Diag Collect v2208 (2022-08-22) by Shane Borden (datastream-diagnostic-toolkit)
+# Datastream Diag Collect v2208 (2022-08-22) 
+by Shane Borden (datastream-diagnostic-toolkit)
+
 Scripts used to collect diagnostic information for the Google Datastream product
 
-Datastream Diag Collect is a "free to use" script that collects Diagnostic Information
+Datastream Diagnostic Toolkit is a "free to use" script that collects Diagnostic Information
 from an Oracle Database used by the Datastream product. Since most of the metadata collected
 comes from DBA_HIST and ASH Views, the system where it runs must have a valid Oracle Diagnostics Pack License.
 
@@ -20,9 +22,9 @@ comes from DBA_HIST and ASH Views, the system where it runs must have a valid Or
 
 ## Troubleshooting Notes
 
-1. Ignore possible errors like:
+Ignore possible errors like:
 
-   "SP2-0310: unable to open file "--sql/..."
-   "ORA-01219: database not open:..."
-   "ORA-00604: error occurred at recursive SQL..."
-   "SP2-0546: User requested Interrupt or EOF detected."
+ - SP2-0310: unable to open file --sql/...
+ - ORA-01219: database not open:...
+ - ORA-00604: error occurred at recursive SQL...
+ - SP2-0546: User requested Interrupt or EOF detected.
