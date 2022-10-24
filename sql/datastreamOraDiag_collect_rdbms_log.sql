@@ -63,8 +63,8 @@ SELECT
 FROM
     X$DBGALERTEXT
 WHERE
-    originating_timestamp BETWEEN nvl(TO_DATE('&&dod_coll_date_from_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI'), sysdate -(1 / 24 / 30)) AND nvl(TO_DATE
-    ('&&dod_coll_date_to_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI'), sysdate)
+    originating_timestamp BETWEEN TRUNC(NVL(TO_DATE('&&dod_coll_date_from_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI'), sysdate -(1 / 24 / 30)))
+        AND TRUNC(NVL(TO_DATE('&&dod_coll_date_to_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI') + 1, sysdate +1))
 ORDER BY
     originating_timestamp
 /
