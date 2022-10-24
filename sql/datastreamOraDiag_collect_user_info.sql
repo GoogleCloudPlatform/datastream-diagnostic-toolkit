@@ -17,12 +17,12 @@ SET TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIM
 
 SPO datastream_diag_user_sys_privs_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 
-COL USERNAME FOR A130
+COL GRANTEE FOR A130
 COL PRIVILEGE FOR A40
 COL ADMIN_OPTION FOR A3
 
 -- header
-SELECT 'USERNAME',
+SELECT 'GRANTEE',
        'PRIVILEGE',
        'ADMIN_OPTION'
 FROM 
@@ -31,13 +31,13 @@ FROM
 
 -- data
 SELECT
-    USERNAME,
+    GRANTEE,
     PRIVILEGE,
     ADMIN_OPTION
 FROM
     DBA_SYS_PRIVS
 WHERE
-  USERNAME = '&&dod_username.'
+  GRANTEE = '&&dod_username.'
 /
 
 SPO OFF;
@@ -48,7 +48,7 @@ COL GRANTED_ROLE FOR A130
 COL DEFAULT_ROLE FOR A3
 
 -- header
-SELECT 'USERNAME',
+SELECT 'GRANTEE',
        'GRANTED_ROLE',
        'ADMIN_OPTION',
        'DEFAULT_ROLE'
@@ -57,14 +57,14 @@ SELECT 'USERNAME',
 
 -- data
 SELECT
-    USERNAME,
+    GRANTEE,
     GRANTED_ROLE,
     ADMIN_OPTION,
     DEFAULT_ROLE
 FROM
     DBA_ROLE_PRIVS
 WHERE
-  USERNAME = '&&dod_username.'
+  GRANTEE = '&&dod_username.'
 /
 
 SPO OFF;
