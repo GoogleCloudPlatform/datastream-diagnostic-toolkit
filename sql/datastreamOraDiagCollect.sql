@@ -87,10 +87,6 @@ SELECT version db_version FROM &&v_object_prefix.instance;
 @@sql/datastreamOraDiag_collect_archive_log.sql
 @@sql/datastreamOraDiag_collect_system_under_observation.sql
 
-SET TERM ON;
-
-set feed on echo on
-
 -- zip datastream diag output
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_ash_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_lsnr_log_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
