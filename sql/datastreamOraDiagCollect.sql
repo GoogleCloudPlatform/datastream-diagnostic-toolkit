@@ -15,7 +15,7 @@
 --              # sqlplus / as sysdba
 --              SQL> START sql/datastreamOraDiagCollect.sql
 --
---  Notes:      Developed and tested on 19.3
+--  Notes:      Developed and tested on 11g,12c,19c
 --
 ---------------------------------------------------------------------------------------
 --
@@ -31,11 +31,14 @@ ALTER SESSION SET NLS_TIMESTAMP_FORMAT = '&&dod_date_format.';
 -- set the collection date
 COL dod_coll_date_from_yyyy_mm_dd_hh24_mi NEW_V dod_coll_date_from_yyyy_mm_dd_hh24_mi;
 COL dod_coll_date_to_yyyy_mm_dd_hh24_mi NEW_V dod_coll_date_to_yyyy_mm_dd_hh24_mi;
+COL dod_username NEW_V dod_username;
 
 PRO Set the from collection date (required - format YYYY-MM-DD HH24:MI)
 SELECT TO_CHAR(TO_DATE('&dod_coll_date_from_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI')) dod_coll_date_from_yyyy_mm_dd_hh24_mi FROM DUAL;
 PRO Set the to collection date (required - format YYYY-MM-DD HH24:MI)
 SELECT TO_CHAR(TO_DATE('&dod_coll_date_to_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI')) dod_coll_date_to_yyyy_mm_dd_hh24_mi FROM DUAL;
+PRO Enter the Datastream Username (required)
+SELECT '&dod_username.' dod_username FROM DUAL;
 
 SET TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIMS ON TRIM ON TI OFF TIMI OFF ARRAY 100 NUM 20 SQLBL ON BLO . RECSEP OFF;
 
@@ -86,6 +89,7 @@ SELECT version db_version FROM &&v_object_prefix.instance;
 @@sql/datastreamOraDiag_collect_rman_output.sql
 @@sql/datastreamOraDiag_collect_archive_log.sql
 @@sql/datastreamOraDiag_collect_system_under_observation.sql
+@@sql/datastreamOraDiag_collect_user_info.sql
 
 -- zip datastream diag output
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_ash_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
@@ -97,6 +101,10 @@ HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_redo_log_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_system_under_observation_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_patchset_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_user_sys_privs_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_user_role_privs_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_user_tab_privs_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+
 
 SET TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF TRIM ON TI OFF TIMI OFF ARRAY 15 NUM 10 SQLBL OFF BLO ON RECSEP WR;
 PRO
