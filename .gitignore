@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Ignore Mac OS files
 .DS_Store
+
+# Git Tracking Directory
+.git/

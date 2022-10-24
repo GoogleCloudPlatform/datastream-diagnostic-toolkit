@@ -1,11 +1,12 @@
-# Datastream Diagnostic Toolkit v22.08 (2022-08) 
+# Datastream Diagnostic Toolkit v22.10 (2022-10) 
 by Shane Borden (datastream-diagnostic-toolkit)
 
 Scripts used to collect diagnostic information for the Google Datastream product
 
-Datastream Diagnostic Toolkit is a "free to use" script that collects Diagnostic Information
-from an Oracle Database used by the Datastream product. Since most of the metadata collected
-comes from DBA_HIST and ASH Views, the system where it runs must have a valid Oracle Diagnostics Pack License.
+Datastream Diagnostic Toolkit is a "free to use" script (Covered buy the Apache 2.0 License) 
+that collects Diagnostic Information from an Oracle Database used by the Datastream product. Since 
+most of the metadata collected comes from DBA_HIST and ASH Views, the system where it runs must 
+have a valid Oracle Diagnostics Pack License.
 
 ## Steps
 
