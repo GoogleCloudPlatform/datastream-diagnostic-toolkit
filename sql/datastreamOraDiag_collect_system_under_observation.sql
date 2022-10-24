@@ -31,11 +31,11 @@ WITH rac AS (
         gv$instance
 ), hrac AS (
     SELECT /*+  MATERIALIZE NO_MERGE  */
-        CASE 2
+        CASE instances
             WHEN 1 THEN
                 ' (historically Single-instance in AWR)'
             ELSE
-                ' (historicly 2-node RAC cluster in AWR)'
+                ' (historically 2-node RAC cluster in AWR)'
         END db_type
     FROM
         rac
@@ -141,6 +141,19 @@ WITH rac AS (
         MAX(begin_interval_time) MAX_SNAPSHOT
     FROM
         dba_hist_snapshot
+), scn_data AS (
+    SELECT /*+  MATERIALIZE NO_MERGE  */
+        TIMESTAMP_TO_SCN(NVL(TO_DATE('&&dod_coll_date_from_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI'), systimestamp)) MIN_SCN,
+        TIMESTAMP_TO_SCN(NVL(TO_DATE('&&dod_coll_date_to_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24:MI'), systimestamp))  MAX_SCN
+    FROM
+        dual
+), supplemental_logging AS (
+    SELECT /*+  MATERIALIZE NO_MERGE  */
+        supplemental_log_data_min,
+        force_logging,
+        log_mode
+    FROM
+        v$database
 )
 SELECT /*+  NO_MERGE  */
     'Database name:' system_item,
@@ -350,12 +363,35 @@ FROM
     awr_settings
 UNION ALL
 SELECT
-    'AWR Snapshots:',
+    'Available AWR Snapshot Range:',
     'Min Snap Date - '|| min_snapshot || ' /  Max Snap Date - ' || max_snapshot
 FROM
     awr_snapshots
+UNION ALL
+SELECT
+    'Selected SCN Range:',
+    'Min SCN - '|| min_scn || ' /  Max SCN - ' || max_scn
+FROM
+    scn_data
+UNION ALL
+SELECT
+    'Supplemental Log Data Min:',
+    supplemental_log_data_min
+FROM
+    supplemental_logging
+UNION ALL
+SELECT
+    'Force Logging:',
+    force_logging
+FROM
+    supplemental_logging
+UNION ALL
+SELECT
+    'Database Log Mode:',
+    log_mode
+FROM
+    supplemental_logging
 /
-
 SPO OFF;
 
 ---------------------------------------------------------------------------------------
