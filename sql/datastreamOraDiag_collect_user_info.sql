@@ -40,7 +40,7 @@ SELECT
 FROM
     DBA_SYS_PRIVS
 WHERE
-  GRANTEE = '&&dod_username.'
+  GRANTEE = UPPER('&&dod_username.')
 /
 
 SPO OFF;
@@ -67,7 +67,7 @@ SELECT
 FROM
     DBA_ROLE_PRIVS
 WHERE
-  GRANTEE = '&&dod_username.'
+  GRANTEE = UPPER('&&dod_username.')
 /
 
 SPO OFF;
@@ -100,7 +100,7 @@ SELECT
 FROM
     DBA_TAB_PRIVS
 WHERE
-  GRANTEE = '&&dod_username.'
+  GRANTEE = UPPER('&&dod_username.')
 /
 
 ---------------------------------------------------------------------------------------
