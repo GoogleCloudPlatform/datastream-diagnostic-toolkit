@@ -153,6 +153,7 @@ WITH rac AS (
 ), supplemental_logging AS (
     SELECT /*+  MATERIALIZE NO_MERGE  */
         supplemental_log_data_min,
+        supplemental_log_data_all,
         force_logging,
         log_mode
     FROM
@@ -384,6 +385,12 @@ FROM
     supplemental_logging
 UNION ALL
 SELECT
+    'Supplemental Log Data All:',
+    supplemental_log_data_all
+FROM
+    supplemental_logging
+UNION ALL
+SELECT
     'Force Logging:',
     force_logging
 FROM
@@ -422,6 +429,43 @@ FROM
     dba_registry_history
 ORDER BY
     action_time NULLS FIRST
+/
+SPO OFF;
+
+---------------------------------------------------------------------------------------
+
+SPO datastream_diag_initparams_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+
+COL NAME FOR A81
+COL VALUE FOR A260
+COL DISPLAY_VALUE FOR A260
+COL ISDEFAULT FOR A7
+COL ISMODIFIED FOR A9
+COL ISDEPRECATED FOR A6
+COL DESCRIPTION FOR A260
+
+SELECT 'NAME',
+       'VALUE',
+       'DISPLAY_VALUE',
+       'ISDEFAULT',
+       'ISMODIFIED',
+       'ISDEPRECATED',
+       'DESCRIPTION'
+FROM DUAL
+/
+
+SELECT
+    SUBSTR(name,1,80) as NAME,
+    SUBSTR(value,1,255) as VALUE,
+    SUBSTR(display_value,1,255) as DISPLAY_VALUE,
+    isdefault,
+    ismodified,
+    isdeprecated,
+    SUBSTR(description,1,255) as DESCRIPTION
+FROM
+    v$system_parameter2
+ORDER BY
+    name
 /
 
 ---------------------------------------------------------------------------------------
