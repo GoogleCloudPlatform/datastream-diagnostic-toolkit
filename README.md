@@ -14,7 +14,8 @@ have a valid Oracle Diagnostics Pack License.
 2. Transfer and Unzip datastream-diagnostic-toolkit.zip or datastream-diagnostic-toolkit.tar.gz and navigate to datastream-diagnostic-toolkit directory
 3. Source in the appropriate database
 4. Connect into SQL*Plus as SYS or user with query access to the data dictionary (i.e. DBA),
-   then execute @sql/datastreamOraDiagCollect.sql
+   then execute the appropriate script for the target system:
+   - Oracle: @datastreamOraDiagCollect.sql
 5. Script will prompt for a timeframe.  At a minimum, please enter a time 15 minutes before the issue occurred
    until 15 minutes after in the following format:  YYYY-MM-DD HH24:MI  
       *** Note: Longer timeframes may require longer execution time
