@@ -107,6 +107,7 @@ SELECT version db_version FROM &&v_object_prefix.instance;
 @@sql/datastreamOraDiag_collect_system_under_observation.sql
 @@sql/datastreamOraDiag_collect_user_info.sql
 @@sql/datastreamOraDiag_collect_supplemental_logging.sql
+@@sql/datastreamOraDiag_comprehensive_db_check.sql
 
 -- zip datastream diag output
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_ash_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
@@ -124,6 +125,7 @@ HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_initparams_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_collect_supp_schema_logging_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
 HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_collect_supp_table_logging_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..csv;
+HOS zip -qmj datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip datastream_diag_comprehensive_db_check_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..txt;
 
 
 SET TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF TRIM ON TI OFF TIMI OFF ARRAY 15 NUM 10 SQLBL OFF BLO ON RECSEP WR;

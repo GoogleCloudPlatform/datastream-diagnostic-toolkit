@@ -154,6 +154,8 @@ WITH rac AS (
     SELECT /*+  MATERIALIZE NO_MERGE  */
         supplemental_log_data_min,
         supplemental_log_data_all,
+        supplemental_log_data_ui,
+        supplemental_log_data_fk,
         force_logging,
         log_mode
     FROM
@@ -387,6 +389,18 @@ UNION ALL
 SELECT
     'Supplemental Log Data All:',
     supplemental_log_data_all
+FROM
+    supplemental_logging
+UNION ALL
+SELECT
+    'Supplemental Log Data Unique Index:',
+    supplemental_log_data_ui
+FROM
+    supplemental_logging
+UNION ALL
+SELECT
+    'Supplemental Log Data FK:',
+    supplemental_log_data_fk
 FROM
     supplemental_logging
 UNION ALL
