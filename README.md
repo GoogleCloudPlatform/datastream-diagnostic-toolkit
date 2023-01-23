@@ -1,4 +1,4 @@
-# Datastream Diagnostic Toolkit v23.01 (2023-01) 
+# Datastream Diagnostic Toolkit v23.01.1 (2023-01-23) 
 by Shane Borden (datastream-diagnostic-toolkit)
 
 Scripts used to collect diagnostic information for the Google Datastream product
