@@ -56,6 +56,42 @@ SELECT TO_CHAR(TO_DATE('&dod_coll_date_to_yyyy_mm_dd_hh24_mi.', 'YYYY-MM-DD HH24
 PRO Enter the Datastream Username (required)
 SELECT '&dod_username.' dod_username FROM DUAL;
 
+PRO
+PRO Parameter 1:
+PRO If your Database is licensed to use the Oracle Tuning pack please enter T.
+PRO If you have a license for Diagnostics pack but not for Tuning pack, enter D.
+PRO If you have both Tuning and Diagnostics packs, enter T.
+PRO Be aware value N reduces the output content substantially. Avoid N if possible.
+PRO
+PRO Oracle Pack License? (Tuning, Diagnostics or None) [ T | D | N ] (required)
+COL license_pack NEW_V license_pack FOR A1;
+SELECT NVL(UPPER(SUBSTR(TRIM('&1.'), 1, 1)), '?') license_pack FROM DUAL;
+WHENEVER SQLERROR EXIT SQL.SQLCODE;
+BEGIN
+  IF NOT '&&license_pack.' IN ('T', 'D', 'N') THEN
+    RAISE_APPLICATION_ERROR(-20000, 'Invalid Oracle Pack License "&&license_pack.". Valid values are T, D and N.');
+  END IF;
+END;
+/
+WHENEVER SQLERROR CONTINUE;
+SET TERM OFF;
+COL diagnostics_pack NEW_V diagnostics_pack FOR A1;
+SELECT CASE WHEN '&&license_pack.' IN ('T', 'D') THEN 'Y' ELSE 'N' END diagnostics_pack FROM DUAL;
+COL skip_diagnostics NEW_V skip_diagnostics FOR A1;
+SELECT CASE WHEN '&&license_pack.' IN ('T', 'D') THEN NULL ELSE '--' END skip_diagnostics FROM DUAL;
+COL tuning_pack NEW_V tuning_pack FOR A1;
+SELECT CASE WHEN '&&license_pack.' = 'T' THEN 'Y' ELSE 'N' END tuning_pack FROM DUAL;
+COL skip_tuning NEW_V skip_tuning FOR A1;
+SELECT CASE WHEN '&&license_pack.' = 'T' THEN NULL ELSE '--' END skip_tuning FROM DUAL;
+SET TERM ON;
+SELECT 'Be aware value "N" reduces output content substantially. Avoid "N" if possible.' warning FROM dual WHERE '&&license_pack.' = 'N';
+BEGIN
+  IF '&&license_pack.' = 'N' THEN
+    DBMS_LOCK.SLEEP(10); -- sleep few seconds
+  END IF;
+END;
+/
+
 SET TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIMS ON TRIM ON TI OFF TIMI OFF ARRAY 100 NUM 20 SQLBL ON BLO . RECSEP OFF;
 
 DEF v_object_prefix = 'v$';
@@ -99,6 +135,7 @@ COL db_version NEW_V db_version;
 SELECT version db_version FROM &&v_object_prefix.instance;
 
 -- AWR collector
+-- ASH Query will only execute if prompt for diagnostics + tuning pack was either D, T.  IF N, query will not EXECUTE
 @@sql/datastreamOraDiag_collect_ash.sql
 @@sql/datastreamOraDiag_collect_lsnr_log.sql
 @@sql/datastreamOraDiag_collect_rdbms_log.sql
@@ -132,3 +169,4 @@ SET TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF 
 PRO
 PRO Generated datastream_diag_output_&&dod_host_name_short._&&dod_dbname_short._&&dod_collection_yyyymmdd_hhmi..zip
 PRO
+EXIT

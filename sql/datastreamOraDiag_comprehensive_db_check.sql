@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
--- This script spools the output to a file named schemaCheckOracle.out 
---
+
 set null "NULL VALUE"
-set feedback off heading off linesize 180  pagesize 9999 echo off verify off trimspool on
+SET TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIMS ON TRIM ON TI OFF TIMI OFF ARRAY 100 NUM 20 SQLBL ON BLO . RECSEP OFF;
+
+---------------------------------------------------------------------------------------
 
 col table_name for a30
 col column_name for a30
@@ -530,7 +531,7 @@ ORDER BY
 	1
 /
 set heading off
-SELECT '------ Summary of log volume processed by day for last 7 days: ------'
+SELECT '------ Summary of log volume processed in Mb by day for last 7 days: ------'
 FROM dual
 /
 set heading on
@@ -547,7 +548,7 @@ order by
 	to_char(first_time, 'mm/dd')
 /
 set heading off
-SELECT '------ Summary of log volume processed per hour for last 7 days: ------' 
+SELECT '------ Summary of log volume processed in Mb per hour for last 7 days: ------' 
 FROM dual;
 set heading on
 select to_char(first_time, 'MM-DD-YYYY') ArchiveDate, 
@@ -563,6 +564,7 @@ order by
 	to_char(first_time, 'MM-DD-YYYY'), to_char(first_time, 'HH24')
 /
 
+---------------------------------------------------------------------------------------
+
 SPO OFF;
-undefine b0
--- exit
+SET TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF TRIM ON TI OFF TIMI OFF ARRAY 15 NUM 10 SQLBL OFF BLO ON RECSEP WR;

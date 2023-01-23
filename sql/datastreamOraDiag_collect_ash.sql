@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-SET TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIMS ON TRIM ON TI OFF TIMI OFF ARRAY 100 NUM 20 SQLBL ON BLO . RECSEP OFF;
+SET AUTOPRINT ON TERM OFF ECHO OFF FEED OFF VER OFF HEA OFF PAGES 0 COLSEP '~' LIN 32767 TRIMS ON TRIM ON TI OFF TIMI OFF ARRAY 100 NUM 20 SQLBL ON BLO . RECSEP OFF;
 
 ---------------------------------------------------------------------------------------
 
@@ -107,8 +107,11 @@ SELECT 'SAMPLE_TIME',
        'PLAN_HASH_COUNT'
   FROM DUAL
 /
-
+VARIABLE x REFCURSOR
+BEGIN
+IF '&&license_pack.' IN ('D','T') THEN
 -- data
+OPEN :x FOR
 SELECT
     *
 FROM
@@ -311,11 +314,15 @@ FROM
             ) b
 )
 where nvl(the_sql,'x') not like 'SELECT /* ash_recent_sessions */%'
-order by 1 desc
+order by 1 desc;
+ELSE
+OPEN :x FOR SELECT 'Not licensed for Diagnostics and Tuning Pack' from DUAL;
+END IF;
+END;
 /
 
 
 ---------------------------------------------------------------------------------------
 
 SPO OFF;
-SET TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF TRIM ON TI OFF TIMI OFF ARRAY 15 NUM 10 SQLBL OFF BLO ON RECSEP WR;
+SET AUTOPRINT OFF TERM ON ECHO OFF FEED ON VER ON HEA ON PAGES 14 COLSEP ' ' LIN 80 TRIMS OFF TRIM ON TI OFF TIMI OFF ARRAY 15 NUM 10 SQLBL OFF BLO ON RECSEP WR;
