@@ -28,6 +28,16 @@ invocation of the script.
    (i.e. datastream_diag_output_hostname_database_yyyymmdd_hh24mi.zip)
 9.  Return the zipfile to support
 
+## Compatibility and Fixup Scripts
+Located within the zipfile are two files that can be used to report fixups for the user and database should they be missing permisisons parameters etc.
+
+* datastream_diag_user_fixup\_[hostname]\_[instance_name]\_[report_date].sql
+* datastream_diag_db_fixup\_[hostname]\_[instance_name]\_[report_date].sql
+
+Also contained within the zip file is a comprehensive report detailing object counts as well as objects that may not be supported by Datastream.  Details of that report can be found in the file:
+
+* datastream_diag_comprehensive_db_check\_[hostname]\_[instance_name]\_[report_date].txt
+
 ## Limitations
 
 1. The scripts are designed to run via SQLPlus and have not been tested with other tools such as SQLDeveloper.
