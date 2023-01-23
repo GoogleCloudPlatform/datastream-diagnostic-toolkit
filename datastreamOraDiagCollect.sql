@@ -21,10 +21,7 @@ limitations under the License.
 --
 -- Author:      Shane Borden
 --
--- Usage:       Collects Requirements from AWR and ASH views on databases with the
---				Oracle Diagnostics Pack license
---
---              The output of this script can be used to diagnose issues with Datastream
+-- Usage:       Collects Requirements from Oracle Database Views for Datastream Diagnostics
 --
 -- Example:     # cd datastream-diagnostic-toolkit
 --              # sqlplus / as sysdba
